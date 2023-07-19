@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Luz Salas</title>
+  <link rel="icon" href="mom5.png" type="image/png"> 
+  <style>
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+    }
+    
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.47), rgb(4, 0, 255), rgba(0, 0, 0, 0.47));
+      padding: 20px;
+      border-radius: 30px;
+      box-shadow: 0 0 50px rgb(255, 0, 0);
+      color: white;
+      text-align: center;
+      z-index: 9999;
+    }
+    
+    .popup-content img {
+      width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+    }
+    
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 0, 255, 0.597);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 999;
+    }
+    
+    .close-button::before,
+    .close-button::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background-color: white;
+    }
+    
+    .close-button::before {
+      transform: rotate(45deg);
+    }
+    
+    .close-button::after {
+      transform: rotate(-45deg);
+    }
+    
+    body {
+      background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.775), rgba(206, 209, 0, 0.814), rgb(0, 0, 0, 0.775));
+      margin: 0;
+    }
+    
+    #header {
+      text-align: center;
+      position: fixed;
+      top: -10px;
+      left: 0;
+      right: 0;
+      padding: 20px 0;
+      font-size: 80px;
+      font-weight: bold;
+      color: rgb(0, 8, 255);
+      text-shadow: 2px 4px 2px rgba(255, 0, 0, 0.711);
+      z-index: 999;
+    }
+
+    #header1 {
+      text-align: center;
+      position: fixed;
+      top: 90px;
+      left: 0;
+      right: 0;
+      padding: 10px 0;
+      font-size: 40px;
+      font-weight: bold;
+      color: rgb(0, 8, 255);
+      text-shadow: 2px 4px 2px rgba(255, 0, 0, 0.711);
+      z-index: 999;
+    }
+    
+    #center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }  
+    
+    #love-button, #next-button, #continue-button, #video-button, #te-amo-button, #finaliza-button {
+      padding: 10px 30px;
+      font-size: 30px;
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      color: rgb(255, 255, 255);
+      text-shadow: 4px 4px 6px rgb(255, 0, 0);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 6px 6px 8px rgba(1, 5, 255);
+      cursor: pointer;
+    }
+    
+    .popup-button.next-button {
+      padding: 10px 20px;
+      font-size: 20px;
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      color: rgb(255, 255, 255);
+      text-shadow: 4px 4px 6px rgb(255, 0, 0);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 6px 6px 8px rgba(1, 5, 255);
+      cursor: pointer;
+    }
+    
+    #next-button, #continue-button, #video-button, #te-amo-button, #finaliza-button {
+      padding: 10px 20px;
+      font-size: 20px;
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      color: rgb(255, 255, 255);
+      text-shadow: 4px 4px 6px rgb(255, 0, 0);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 6px 6px 8px white;
+      cursor: pointer;
+    }
+    
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      padding: 20px;
+      border-radius: 30px;
+      box-shadow: 4px 6px 10px rgb(255, 0, 0);
+      color: white;
+      z-index: 9999;
+      text-align: center;
+    }
+    
+    .popup h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .popup p:last-child {
+      margin-bottom: 0;
+    }
+    
+    #heart1 {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      margin: 0;
+      padding: 0;      
+    }
+    
+    #heart2 {
+      position: fixed;
+      top: 20px;
+      right: 40px;
+      margin: 0;
+      padding: 0;     
+    }
+    
+    #heart3 {
+      position: fixed;
+      bottom: 50px;
+      left: 50px;
+      margin: 0;
+      padding: 0;     
+    }
+    
+    #heart4 {
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+      margin: 0;
+      padding: 0;     
+    }
+    #heart1 img {
+        filter: drop-shadow(0 0 15px rgb(255, 255, 255));
+    }
+    #heart2 img{
+        filter: drop-shadow(0 0 15px rgb(216, 41, 41));
+    }
+    #heart3 img{
+        filter: drop-shadow(0 0 15px rgb(216, 41, 41));
+    }
+    #heart4 img {
+        filter: drop-shadow(0 0 15px rgb(255, 255, 255));
+    }
+    
+    #heart1 img {
+      width: 200px;
+      height: auto;
+    }
+    
+    #heart2 img {
+      width: 200px;
+      height: auto;
+    }
+    
+    #heart3 img {
+      width: 180px;
+      height: auto;
+    }
+    
+    #heart4 img {
+      width: 200px;
+      height: auto;
+    }
+    
+    .popup-image {
+      position: fixed;
+      top: 49%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('cat.png');
+      background-size: cover;
+      filter: drop-shadow(0 0 15px rgb(0, 0, 255));
+      width: 750px;
+      height: 750px;
+      z-index: -5;
+      opacity: 0.7;
+    }
+    
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(0, 0, 0, 0.47);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .popup-close::before,
+    .popup-close::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background-color: rgb(255, 255, 255);
+    }
+    
+    .popup-close::before {
+      transform: rotate(45deg);
+    }
+    
+    .popup-close::after {
+      transform: rotate(-45deg);
+    }
+    .popup-form {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      padding: 20px;
+      border-radius: 30px;
+      box-shadow: 0 0 50px rgb(255, 255, 255);
+      color: white;
+      z-index: 9999;
+      text-align: center;
+    }
+    
+    .popup-form h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .popup-form p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .popup-form input[type="text"],
+    .popup-form input[type="password"] {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    
+    .popup-form button {
+      padding: 10px 20px;
+      font-size: 20px;
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      color: rgb(255, 255, 255);
+      text-shadow: 4px 4px 6px rgb(205, 209, 0, 0.722);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 6px 6px 8px rgb(0, 0, 0);
+      cursor: pointer;
+    }
+    
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .popup-content {
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      padding: 20px;
+      border-radius: 30px;
+      text-shadow: 4px 6px 10px rgb(255, 0, 0);
+      box-shadow: 4px 6px 10px rgb(255, 0, 0);
+      color: white;
+      text-align: center;
+    }
+    
+    .popup-content h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .popup-content p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .popup-content input[type="text"],
+    .popup-content input[type="password"] {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    
+    .popup-content button {
+      padding: 10px 20px;
+      font-size: 20px;
+      background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(1, 5, 255), rgb(0, 0, 0));
+      color: rgb(255, 255, 255);
+      text-shadow: 4px 6px 10px rgba(209, 0, 0);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 6px 6px 8px rgb(0, 0, 0);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">Luz Salas</div>
+  <div id="header1">¡La razón de mi ser!</div>  
+
+  <div class="popup-overlay">
+    <div class="popup-content">
+      <h1>De: Ricardo<br>Para: Mi Mamá</h1>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Usuario">
+        <br>
+        <input type="password" id="password" placeholder="Contraseña">
+        <br>        
+        <button type="submit">Comencemos</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="heart1">
+    <img src="flor.png" alt="Heart">    
+    <button class="popup-button next-button" onclick="openPopup('mom2.png')">Recuerdos</button>
+  </div>
+  <div id="heart2">
+    <img src="flor2.png" alt="Heart">
+    <button class="popup-button next-button" onclick="openPopup('hijos.png')">Madre</button>
+  </div>
+  <div id="heart3">
+    <img src="flor4.png" alt="Heart">
+    <button class="popup-button next-button" onclick="openPopup('mom3.png')">Certificado</button>
+  </div>
+  <div id="heart4">
+    <img src="flor3.png" alt="Heart">
+    <button class="popup-button next-button" onclick="openPopup('mon4.png')">Con Cariño</button>
+  </div>
+
+  <div id="center">
+    <button id="love-button">Para tí</button>
+  </div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      
+      if (username === "Luz" && password === "27121959") {
+        var popupOverlay = document.querySelector(".popup-overlay");
+        popupOverlay.style.display = "none";
+        alert("Ingresaste Madre, ¡Bienvenida mamita, esto lo cree con mucho cariño para la persona que me dio la vida y siempre vela porque este bien, Gracias Madre!💐.");
+      } else {
+        alert("Te equivocaste Mamita, Intenta de nuevo");
+      }
+    });
+
+    var currentPopup = null;
+
+    document.getElementById("love-button").addEventListener("click", function() {      
+    
+      if (currentPopup) {
+        currentPopup.remove();
+      }
+
+      var popup1 = document.createElement("div");
+      popup1.className = "popup";
+      popup1.innerHTML = "<p style='font-size: 40px; margin: 20px;'>Madre</p><img src='mom5.png' alt='Amor' style='width: 350px; height: auto; border-radius: 30px; filter: drop-shadow(6px 6px 8px rgba(255, 255, 255));'><p style='font-size: 18px; margin: 20px; text-align: justify;'>Mamita querida, eres mi guía y mi inspiración, A pesar de mis errores, siempre das tu corazón. Me diste vida y un hogar cálido y seguro, Crecí con tu amor y tus enseñanzas, lo más puro. Aunque a veces me veas con pasos torpes y confusos, Sabes que cada día intento ser más virtuoso. Gracias a ti soy quien soy, con tus valores en alto, Tus lecciones me moldearon, dejando un legado valioso.<br>Con mis hermanos, juntos fuimos bendecidos, Porque en ti encontramos el amor compartido. Eres el faro que guía y nos mantiene unidos, Siempre apoyándonos, incluso en momentos dolidos.</p><button id='next-button'>Continua</button>";
+      document.body.appendChild(popup1);
+      currentPopup = popup1;
+
+      document.getElementById("next-button").addEventListener("click", function() {
+        if (currentPopup) {
+          currentPopup.remove();
+        }
+
+        var popup2 = document.createElement("div");
+        popup2.className = "popup";
+        popup2.innerHTML = "<img src='mom7.png' alt='Amor' style='width: 350px; height: auto; border-radius: 30px;box-shadow: 6px 6px 8px rgb(255, 255, 255);'><p style='font-size: 18px; margin: 20px;text-align: justify;'>Tu fuerza y coraje, un ejemplo a seguir, Afrontando la vida, sin cesar de sonreír. A pesar de tus propios dolores y desvelos, Nos diste la fortaleza para vencer cualquier desvelo. Cuidas a mis hijos como si fueran los tuyos propios, Les das amor y cariño, todos tus anhelos. Son felices y hermosos, gracias a tu cuidado, En tu amoroso abrazo, encuentran su refugio amado.<br>Madre, tus sacrificios y entrega son inmensos, Nos das todo sin pedir nada a cambio, es un consenso. Agradecido y admirado por la mujer que eres, Siempre te llevaré en mi alma, con orgullo y placeres.</p><button id='continue-button'>Continua</button>";
+        document.body.appendChild(popup2);
+        currentPopup = popup2;
+
+        document.getElementById("continue-button").addEventListener("click", function() {
+          if (currentPopup) {
+            currentPopup.remove();
+          }
+
+          var popup3 = document.createElement("div");
+          popup3.className = "popup";
+          popup3.innerHTML = "<img src='fam.png' alt='Amor' style='width: 350px; height: auto; border-radius: 30px;box-shadow: 6px 6px 8px rgb(255, 255, 255);'><p style='font-size: 18px; margin: 20px;text-align: justify;'>Gracias por ser mi madre, mi soporte y mi fortaleza, Eres mi sol radiante en cada nueva proeza. En cada paso de mi vida, sé que estarás presente, Eres mi luz, mi todo, eternamente.</p><button id='video-button'>Continua</button>";
+          document.body.appendChild(popup3);
+          currentPopup = popup3;
+
+          document.getElementById("video-button").addEventListener("click", function() {
+            if (currentPopup) {
+              currentPopup.remove();
+            }
+
+            var popup4 = document.createElement("div");
+            popup4.className = "popup";
+            popup4.innerHTML = "<p style='font-size: 40px; color: rgb(255, 255, 255); text-shadow: 2px 2px 4px black;'>Para Tí Madre mía</p><video width='560' height='315' style='border-radius: 30px; box-shadow: 5px 5px 10px white;' controls><source src='./MAGO DE OZ  MORIRE SIENDO DE TI.mp4' type='video/mp4'></video><br><br><button id='te-amo-button'>Continua</button>";
+            document.body.appendChild(popup4);
+            currentPopup = popup4;
+
+            document.getElementById("te-amo-button").addEventListener("click", function() {
+              if (currentPopup) {
+                currentPopup.remove();
+              }
+
+              var popup5 = document.createElement("div");
+              popup5.className = "popup";
+              popup5.innerHTML = "<img src='fam2.png' alt='Amor' style='width: 350px; height: auto; border-radius: 30px;box-shadow: 6px 6px 8px rgb(255, 255, 255);'><p style='font-size: 20px;text-align: justify;'>En este poema sencillo, te expreso mi gratitud, Por ser mi madre amada, mi eterna plenitud. No hay palabras suficientes para expresar lo que siento, Eres mi mayor aliento.</p><button id='finaliza-button'>Finalizar</button>";
+              document.body.appendChild(popup5);
+              currentPopup = popup5;
+
+              document.getElementById("finaliza-button").addEventListener("click", function() {
+                if (currentPopup) {
+                  currentPopup.remove();
+                  currentPopup = null;
+                }
+              });
+            });
+          });
+        });
+      });
+    });
+  </script>
+  <div class="popup-image"></div>
+  
+  <script>
+    var popupOverlay = document.querySelector(".popup-overlay");
+    var popupContent = document.querySelector(".popup-content");
+    var popupButtons = document.querySelectorAll(".popup-button");
+      
+     function openPopup(imageSrc) {
+  var popupOverlay = document.querySelector(".popup-overlay");
+  var popupContent = document.querySelector(".popup-content");
+
+  var popupImage = document.createElement("img");
+  popupImage.src = imageSrc;
+  popupImage.style.width = "200px";
+  popupImage.style.height = "auto";
+  popupImage.style.filter = "drop-shadow(0 0 5px rgba(255, 255, 255))";
+  popupImage.style.borderRadius = "35px";  
+
+  popupContent.innerHTML = "";
+  var popupText = document.createElement("p");
+switch (imageSrc) {
+  case "mom2.png":
+    popupText.textContent = "Querida madre, en tus brazos tomaste a mis pequeños tesoros, dos almas hermosas que con amor y dedicación ves florecer. Agradecido siempre estaré, pues criaste no solo a tres hijos, sino a dos más, convirtiéndolos en seres maravillosos. Eres el faro que guía nuestra familia y el corazón que nos llena de amor inmenso. ¡Gracias por ser la raíz que nos sustenta y el pilar que nos sostiene en cada paso de la vida! 💕";
+    break;
+  case "hijos.png":
+    popupText.textContent = "Ver crecer a mis hijos me llena de felicidad, saber que siempre estarán bien bajo tu dedicación y cuidado es una bendición. Admirablemente, eres mi ejemplo a seguir, y así será siempre. Tu amor y ternura son los pilares que sostienen nuestra familia, y te agradezco infinitamente por ser la luz que guía nuestro camino. ¡Te amo, mamá, con todo mi corazón! 💕";
+    break;
+  case "mom3.png":
+    popupText.textContent = "Eres la viva encarnación del certificado de la mejor madre y abuela que pueda existir. Bajo tus cálidos cuidados, crecimos junto a mis hermanos, y ahora mis hijos serán bendecidos con la dicha de disfrutar de tus amorosos cuidados. Tu presencia es el mayor regalo que podemos recibir en esta vida. Te amamos más allá de las palabras, ¡eres el corazón que late en nuestra familia! 💖";
+    break;
+  case "mon4.png":
+    popupText.textContent = "Querida madre, tu cariño se extiende más allá de nosotros y tus nietos; también abraza a tus queridas mascotas. Admirablemente, aún en medio de tus propios dolores, siempre estás atenta a todos y a cada detalle. Infinitas gracias por ser la mujer excepcional que eres, llena de amor incondicional y bondad. Tu corazón es un universo generoso, y cada día me siento afortunado de tenerte como guía y ejemplo. ¡Te amo y te valoro más de lo que las palabras pueden expresar! 💖";
+    break;
+  default:
+    popupText.textContent = "Texto de imagen no especificado";
+}
+popupText.style.fontSize = "20px";
+popupText.style.textAlign = "justify";
+popupContent.appendChild(popupText);
+  popupContent.appendChild(popupImage);
+  popupContent.appendChild(popupText);
+
+  popupOverlay.style.display = "flex";
+}
+      
+    function closePopup() {
+      popupOverlay.style.display = "none";
+    }    
+    popupButtons.forEach(function(button) {
+      var imageSrc = button.previousElementSibling.src;
+      button.addEventListener("click", function() {        
+        var popupCloseButton = document.createElement("div");
+        popupCloseButton.className = "popup-close";
+        popupCloseButton.addEventListener("click", closePopup);
+        popupContent.appendChild(popupCloseButton);
+      });
+    });
+  </script>
+</body>
+</html>
